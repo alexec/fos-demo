@@ -1,0 +1,42 @@
+<header ng-switch on="$location.path().indexOf('/Todos/new') > -1">
+    <h3 ng-switch-when="true">Create a new Todo</h3>
+    <h3 ng-switch-when="false">View or edit Todo</h3>
+</header>
+<form id="TodoForm" name="TodoForm" class="form-horizontal" role="form">
+    <div ng-show="displayError" class="alert alert-danger">
+        <strong>Error!</strong> Something broke. Retry, or cancel and start afresh.
+    </div>
+    
+
+    <div class="form-group" ng-class="{'has-error': TodoForm.task.$invalid}">
+        <label for="task" class="col-sm-2 control-label">Task</label>
+        <div id="taskControls" class="col-sm-10">
+            <input id="task" name="task" type="text" required class="form-control" ng-model="todo.task" placeholder="Enter the Todo Task"></input>
+            <span class="help-block error" ng-show="TodoForm.task.$error.required">required</span> 
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': TodoForm.description.$invalid}">
+        <label for="description" class="col-sm-2 control-label">Description</label>
+        <div id="descriptionControls" class="col-sm-10">
+            <input id="description" name="description" type="text" class="form-control" ng-model="todo.description" placeholder="Enter the Todo Description"></input>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': TodoForm.createdOn.$invalid}">
+        <label for="createdOn" class="col-sm-2 control-label">Created On</label>
+        <div id="createdOnControls" class="col-sm-10">
+            <date id="createdOn" name="createdOn" ng-model="todo.createdOn" placeholder="Enter the Todo Created On"></date>
+            <span class="help-block error" ng-show="TodoForm.createdOn.$error.dateFormat">does not match format "yyyy-MM-dd" (e.g. 2013-12-01)</span>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button id="saveTodo" name="saveTodo" class="btn btn-primary" ng-disabled="isClean() || TodoForm.$invalid" ng-click="save()"><span class="glyphicon glyphicon-ok-sign"></span> Save</button>
+            <button id="cancel" name="cancel" class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove-sign"></span> Cancel</button>
+            <button id="deleteTodo" name="deleteTodo" class="btn btn-danger" ng-show="todo.id" ng-click="remove()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        </div>
+    </div>
+</form>
